@@ -5,11 +5,11 @@
     line-height: calc(1em + 0.75rem);
   }
   html {
-    --color-background: #fffcf0;
-    --color-background-shade: #fbf3d9;
-    --color-text: #22211d;
-    --color-text-shade: #575650;
-    --color-primary: #147d82;
+    --color-background: #f5efd7;
+    --color-background-shade: #f0e2b5;
+    --color-text: #301e1a;
+    --color-text-shade: #614942;
+    --color-primary: #e07438;
 
     --font-family: -apple-system, BlinkMacSystemFont, "Inter", "IBM Plex Sans",
       Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji,
@@ -35,11 +35,11 @@
     --font-size-xl: clamp(1.6rem, 0.14vw + 1.6rem, 2rem);
   }
   [data-theme="dark"] {
-    --color-background: #100f0f;
-    --color-background-shade: #202424;
-    --color-text: #d2dee1;
-    --color-text-shade: #989f9f;
-    --color-primary: #62aba4;
+    --color-background: #0d0d0d;
+    --color-background-shade: #181818;
+    --color-text: #f8f5e9;
+    --color-text-shade: #d6c8a6;
+    --color-primary: #ff5500;
   }
   h1 {
     font-size: var(--font-size-xl);
@@ -77,6 +77,7 @@
     padding: 0 1em;
     color: var(--color-text-shade);
     border-left: 0.25em solid var(--color-primary);
+    background-color: rgba(224, 116, 56, 0.05); /* Light orange background */
   }
   button {
     display: inline;
@@ -92,14 +93,18 @@
     cursor: pointer;
   }
   button:hover {
-    background-color: var(--color-text);
+    background-color: #c25f26; /* Darker orange on hover */
     color: white;
+  }
+  [data-theme="dark"] button:hover {
+    background-color: #cc4400; /* Darker orange for dark mode hover */
   }
   pre {
     padding: var(--space-4);
     border-radius: 4px;
     font-size: var(--font-size-xs);
     background: var(--color-background-shade);
+    border-left: 3px solid var(--color-primary);
     --prism-background: var(--color-background-shade);
     --prism-font-size: var(--font-size-xs);
   }
