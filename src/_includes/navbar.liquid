@@ -3,19 +3,12 @@
     max-width: var(--container-max-size);
     padding: var(--space-7) var(--container-padding-sides);
     margin: 0 auto;
-    display: flex;
-    flex-direction: column;
   }
   
   .navbar-top {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: var(--space-5);
-  }
-  
-  .navbar nav {
-    width: 100%;
   }
   
   .navbar a {
@@ -28,26 +21,44 @@
     transition: color 0.2s ease-in-out;
   }
   
-  .navbar-links {
-    list-style: none;
-    display: flex;
-    align-items: center;
-    gap: var(--space-6);
-    row-gap: var(--space-4);
-    flex-wrap: wrap;
-    padding: 0;
-    margin: 0;
-  }
-  
   .link-home {
-    font-weight: bold;
+    font-weight: 500;
     color: var(--color-primary);
     font-size: var(--font-size-lg);
   }
   
+  .navbar-right {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+  }
+  
+  .navbar-right .nav-links {
+    display: flex;
+    list-style: none;
+    gap: var(--space-4);
+    align-items: center;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .navbar-right .dark-toggler-container {
+    margin-left: var(--space-2);
+    display: flex;
+    align-items: center;
+  }
+  
   @media (max-width: 768px) {
-    .navbar-links {
-      justify-content: center;
+    .navbar-right .nav-links {
+      gap: var(--space-3);
+    }
+    
+    .navbar-right {
+      gap: var(--space-2);
+    }
+    
+    .navbar-right .nav-links a {
+      font-size: var(--font-size-xs);
     }
   }
 </style>
@@ -57,14 +68,15 @@
     <div class="link-home">
       <a href="/">{{ site.shortTitle }}</a>
     </div>
-    {% include "dark-toggler.liquid" %}
+    
+    <div class="navbar-right">
+      <ul class="nav-links">
+        <li><a href="/about">About</a></li>
+        <li><a href="/uses">Uses</a></li>
+      </ul>
+      <div class="dark-toggler-container">
+        {% include "dark-toggler.liquid" %}
+      </div>
+    </div>
   </div>
-  <nav>
-    <ul class="navbar-links">
-      <li><a href="/articles">Articles</a></li>
-      <li><a href="/about">About</a></li>
-      <li><a href="/uses">Uses</a></li>
-      <li><a href="/rss.xml">RSS</a></li>
-    </ul>
-  </nav>
 </header>

@@ -79,6 +79,22 @@
 
   html.setAttribute("data-theme", currentTheme);
 
+  // Set theme color for iOS Safari
+  function updateThemeColorMetaTags(theme) {
+    // Get the theme-color meta tag
+    const themeColorTag = document.querySelector('meta[name="theme-color"]');
+    
+    // Set the color based on the current theme
+    if (theme === 'dark') {
+      themeColorTag.setAttribute('content', '#0d0d0d');
+    } else {
+      themeColorTag.setAttribute('content', '#f5efd7');
+    }
+  }
+
+  // Apply theme color on page load
+  updateThemeColorMetaTags(currentTheme);
+
   setTimeout(() => {
     document.querySelector("body").style.transition =
       "background-color 1s ease-out, color 1s ease-out";
@@ -89,5 +105,13 @@
     html.setAttribute("data-theme", newTheme);
     localStorage.setItem("theme", newTheme);
     currentTheme = newTheme;
+    
+    // Update theme color meta tags when theme changes
+    updateThemeColorMetaTags(newTheme);
+    
+    // Dispatch custom event for theme change
+    document.dispatchEvent(new CustomEvent('themeChanged', { 
+      detail: { theme: newTheme } 
+    }));
   });
 </script>

@@ -9,14 +9,21 @@
     --color-background-shade: #f0e2b5;
     --color-text: #301e1a;
     --color-text-shade: #614942;
-    --color-primary: #e07438;
+    --color-primary: #FD7701; /* New orange color */
+    
+    /* RGB versions of colors for transparency */
+    --color-text-rgb: 48, 30, 26;
+    --color-text-shade-rgb: 97, 73, 66;
 
+    /* Browser UI Color */
+    --browser-ui-color: #f5efd7;
+    
     --font-family: -apple-system, BlinkMacSystemFont, "Inter", "IBM Plex Sans",
       Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji,
       Segoe UI Symbol;
 
     --container-max-size: 75ch;
-    --container-padding-sides: var(--space-4);
+    --container-padding-sides: var(--space-7);
 
     --space-1: 0.35rem;
     --space-2: 0.5rem;
@@ -33,13 +40,23 @@
     --font-size-base: clamp(0.9rem, 0.16vw + 0.9rem, 1.25rem);
     --font-size-lg: clamp(1.2rem, 0.12vw + 1.2rem, 1.6rem);
     --font-size-xl: clamp(1.6rem, 0.14vw + 1.6rem, 2rem);
+    
+    height: 100%;
+    background-color: var(--color-background);
   }
   [data-theme="dark"] {
     --color-background: #0d0d0d;
     --color-background-shade: #181818;
     --color-text: #f8f5e9;
     --color-text-shade: #d6c8a6;
-    --color-primary: #ff5500;
+    --color-primary: #FD7701; /* Using the same orange for dark mode */
+    
+    /* Browser UI Color */
+    --browser-ui-color: #0d0d0d;
+    
+    /* RGB versions of colors for transparency in dark mode */
+    --color-text-rgb: 248, 245, 233;
+    --color-text-shade-rgb: 214, 200, 166;
   }
   h1 {
     font-size: var(--font-size-xl);
@@ -63,10 +80,41 @@
     font-size: 1rem;
     font-size: var(--font-size-base);
     text-rendering: optimizeLegibility;
+    min-height: 100%;
+    /* Remove padding that might interfere with full bleed to edges */
+    padding: 0;
+    margin: 0;
+    /* Allow content to flow into the safe areas but respect them for content */
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
   }
   a {
     color: var(--color-primary);
   }
+  
+  /* Add arrow to external links */
+  a[href^="http"]:not([href*="hunsanger"]):after {
+    content: " ↗";
+    display: inline-block;
+    font-family: system-ui, sans-serif;
+    color: var(--color-text-shade);
+    opacity: 0.7;
+    font-size: 0.9em;
+    vertical-align: super;
+    font-size: 0.7em;
+    margin-left: 2px;
+  }
+  
+  /* Exclude arrows from navbar, footer, and special elements */
+  .navbar a[href^="http"]:after,
+  .footer a[href^="http"]:after,
+  .nav-links a[href^="http"]:after,
+  .dark-toggler-container a[href^="http"]:after,
+  a.theme-toggle[href^="http"]:after,
+  a.link-home[href^="http"]:after {
+    content: none;
+  }
+  
   img,
   picture {
     height: auto;
@@ -77,7 +125,7 @@
     padding: 0 1em;
     color: var(--color-text-shade);
     border-left: 0.25em solid var(--color-primary);
-    background-color: rgba(224, 116, 56, 0.05); /* Light orange background */
+    background-color: rgba(253, 119, 1, 0.05); /* Updated to match #FD7701 */
   }
   button {
     display: inline;
@@ -93,11 +141,11 @@
     cursor: pointer;
   }
   button:hover {
-    background-color: #c25f26; /* Darker orange on hover */
+    background-color: #e16a00; /* Darker shade of #FD7701 for hover */
     color: white;
   }
   [data-theme="dark"] button:hover {
-    background-color: #cc4400; /* Darker orange for dark mode hover */
+    background-color: #ff8a2c; /* Lighter shade of #FD7701 for dark mode hover */
   }
   pre {
     padding: var(--space-4);
@@ -132,5 +180,34 @@
     position: absolute;
     white-space: nowrap;
     width: 1px;
+  }
+
+  /* iOS/iPadOS specific adjustments for full-screen mode */
+  @supports (padding: max(0px)) {
+    body {
+      /* This ensures the body takes up the full viewport */
+      min-height: 100vh;
+      min-height: -webkit-fill-available;
+    }
+    
+    .navbar {
+      padding-left: max(var(--container-padding-sides), env(safe-area-inset-left));
+      padding-right: max(var(--container-padding-sides), env(safe-area-inset-right));
+      /* Add extra padding at the top to account for the status bar */
+      padding-top: calc(var(--space-7) + env(safe-area-inset-top));
+    }
+    
+    .main-container {
+      padding-left: max(var(--container-padding-sides), env(safe-area-inset-left));
+      padding-right: max(var(--container-padding-sides), env(safe-area-inset-right));
+      padding-bottom: max(var(--space-4), env(safe-area-inset-bottom));
+    }
+  }
+  
+  /* Mobile-specific adjustments for thinner margins */
+  @media (max-width: 768px) {
+    html {
+      --container-padding-sides: var(--space-3);
+    }
   }
 </style>

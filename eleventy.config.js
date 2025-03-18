@@ -33,6 +33,40 @@ module.exports = function (eleventyConfig) {
       .sort((a, b) => b.count - a.count);
   });
 
+  // Add a filter to strip HTML
+  eleventyConfig.addFilter("stripHTML", (content) => {
+    if (!content) return '';
+    return content.replace(/<\/?[^>]+(>|$)/g, "");
+  });
+  
+  // Add a filter to count words
+  eleventyConfig.addFilter("wordCount", (content) => {
+    if (!content) return 0;
+    return content.trim().split(/\s+/).length;
+  });
+
+  // Add a filter to group posts by year
+  eleventyConfig.addFilter("groupByYear", (posts) => {
+    const postsByYear = {};
+    
+    // Group posts by year
+    posts.forEach(post => {
+      const year = new Date(post.date).getFullYear();
+      if (!postsByYear[year]) {
+        postsByYear[year] = [];
+      }
+      postsByYear[year].push(post);
+    });
+    
+    // Convert to array format sorted by year (descending)
+    return Object.keys(postsByYear)
+      .sort((a, b) => b - a)
+      .map(year => ({
+        year,
+        posts: postsByYear[year]
+      }));
+  });
+
   eleventyConfig.addCollection("posts", function (collectionApi) {
     return collectionApi.getFilteredByGlob("src/posts/*.md").reverse();
   });

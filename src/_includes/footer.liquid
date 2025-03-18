@@ -3,36 +3,61 @@
     max-width: var(--container-max-size);
     padding: var(--space-7) var(--container-padding-sides);
     margin: var(--space-6) auto 8rem auto;
+    text-align: center;
   }
   .footer a {
     text-decoration: none;
-    color: unset;
+    color: var(--color-text-shade);
+    font-size: var(--font-size-xs);
+    transition: color 0.2s ease-in-out;
   }
   .footer a:hover {
     color: var(--color-primary);
-    transition: color 0.2s ease-in-out;
   }
   .footer-links {
     list-style: none;
     display: flex;
+    justify-content: center;
     align-items: center;
-    gap: var(--space-6);
-    row-gap: var(--space-4);
-    flex-wrap: wrap;
+    gap: var(--space-4);
   }
-  .link-home {
-    font-weight: bold;
-    color: var(--color-primary);
-    font-size: var(--font-size-lg);
+  .social-icon {
+    margin-right: var(--space-1);
+  }
+  .footer i {
+    font-size: 1em;
+    position: relative;
+    top: 0.125em;
   }
 </style>
 
 <footer class="footer">
   <nav>
     <ul class="footer-links">
-      <li><a href="/articles">Articles</a></li>
-      <li><a href="/about">About</a></li>
-      <li><a href="/rss">RSS</a></li>
+      <li>
+        <a href="https://bsky.app/profile/hunsanger.com" target="_blank" rel="noopener noreferrer">
+          <span class="social-icon">
+            <i class="fa-brands fa-bluesky"></i>
+          </span>
+          BlueSky
+        </a>
+      </li>
+      <li>
+        <a href="https://social.lol/@hunsanger" target="_blank" rel="noopener noreferrer">
+          <span class="social-icon">
+            <i class="fa-brands fa-mastodon"></i>
+          </span>
+          Mastodon
+        </a>
+      </li>
+      <li>
+        <a href="/rss.xml">
+          <span class="social-icon">
+            <i class="fa-solid fa-rss"></i>
+          </span>
+          RSS
+        </a>
+      </li>
     </ul>
   </nav>
 </footer>

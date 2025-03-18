@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <rect width="512" height="512" fill="#FD7701" rx="100" ry="100"/>
+  <g fill="#fff">
+    <!-- Coffee Mug -->
+    <path d="M150 130 L350 130 L330 370 L170 370 Z" stroke="#fff" stroke-width="20" fill="none"/>
+    <!-- Mug Handle -->
+    <path d="M350 170 C400 170, 420 220, 380 270" stroke="#fff" stroke-width="20" fill="none"/>
+    <!-- Steam 1 -->
+    <path d="M200 110 Q210 80, 230 110" stroke="#fff" stroke-width="10" fill="none"/>
+    <!-- Steam 2 -->
+    <path d="M250 100 Q260 70, 280 100" stroke="#fff" stroke-width="10" fill="none"/>
+    <!-- Steam 3 -->
+    <path d="M300 110 Q310 80, 330 110" stroke="#fff" stroke-width="10" fill="none"/>
+  </g>
+</svg> 

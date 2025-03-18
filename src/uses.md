@@ -76,7 +76,7 @@ Retired
 ### Mice
 
 • [Logitech Lift](https://www.logitech.com/en-us/products/mice/lift-vertical-ergonomic-mouse.910-006472.html) (❤️ this mouse)  
-• [Apple Magic Trackpad](https://www.apple.com/shop/product/MK2D3AM/A/magic-trackpad-white-multi-touch-surface)  
+• [Apple Magic Trackpad](https://www.apple.com/shop/product/MK2D3AM/A/magic-trackpad-white-multi-touch-surface)
   
 Retired  
 • _Several great Logitech MX Master mice (3, 2, Pro)_

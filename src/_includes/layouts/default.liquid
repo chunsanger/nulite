@@ -1,8 +1,45 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="no-js">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    
+    <!-- iOS/iPadOS specific meta tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <!-- Theme color (will be set by JavaScript) -->
+    <meta name="theme-color" content="#f5efd7">
+    <meta name="apple-mobile-web-app-title" content="Hunsanger">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="color-scheme" content="light dark">
+    <meta name="supported-color-schemes" content="light dark">
+
+    <!-- Add no-js class detection -->
+    <script>
+      document.documentElement.classList.remove('no-js');
+      
+      // Detect dark mode and set theme colors
+      function updateThemeColor() {
+        const isDarkMode = document.documentElement.getAttribute('data-theme') === 'dark' ||
+          (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches && 
+           !document.documentElement.hasAttribute('data-theme'));
+        
+        document.querySelector('meta[name="theme-color"]').setAttribute(
+          'content', 
+          isDarkMode ? '#0d0d0d' : '#f5efd7'
+        );
+      }
+      
+      // Initial update
+      updateThemeColor();
+      
+      // Listen for changes in color scheme
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateThemeColor);
+      
+      // We'll need to listen for manual theme changes too
+      // This will be handled by the theme toggle script
+      document.addEventListener('themeChanged', updateThemeColor);
+    </script>
 
     {%if title %}
       <title>{{ title }}</title>
@@ -24,10 +61,13 @@
       <meta property="og:description" content="{{ site.description }}" />
     {% endif %} 
 
-    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <!-- Favicon using a coffee emoji -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>☕</text></svg>">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>☕</text></svg>">
     <link rel="manifest" href="/favicon/site.webmanifest">
+    
+    <!-- FontAwesome kit -->
+    <script src="https://kit.fontawesome.com/85535d88b6.js" crossorigin="anonymous"></script>
 
     {% include "css/reset.liquid" %}
     {% include "css/global.liquid" %}

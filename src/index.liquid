@@ -3,29 +3,63 @@ layout: layouts/default.liquid
 ---
 
 <div class="main-sections">
-  <section>
+  <!-- Latest Article Section -->
+  <section class="latest-section">
     <h2>Latest</h2>
-    {% assign posts = collections.posts %}
-    {% assign count = 1 %}
-    {% include "postlist.liquid" %}
+    {% assign latestPost = collections.posts | first %}
+    <!-- Debug: {{ collections.posts.size }} posts found -->
+    <div class="latest-article">
+      <h3 class="article-title">
+        <a href="{{ latestPost.url }}">{{ latestPost.data.title }}</a>
+      </h3>
+      <div class="article-date">
+        {{ latestPost.date | date: "%B %-d, %Y" }} • {% assign words = latestPost.templateContent | stripHTML | wordCount %}{% assign readingTime = words | divided_by: 180 | round %}{% if readingTime < 1 %}1{% else %}{{ readingTime }}{% endif %} minute read
+      </div>
+      <div class="article-excerpt">
+        <p>
+          {% if latestPost.templateContent contains "<!-- Excerpt Start -->" and latestPost.templateContent contains "<!-- Excerpt End -->" %}
+            {% assign excerptStart = latestPost.templateContent | split: "<!-- Excerpt Start -->" | last %}
+            {% assign excerpt = excerptStart | split: "<!-- Excerpt End -->" | first | strip_html | strip %}
+            {{ excerpt }}
+          {% else %}
+            {% if latestPost.data.description %}
+              {{ latestPost.data.description }}
+            {% else %}
+              No excerpt or description available
+            {% endif %}
+          {% endif %}
+        </p>
+        <a href="{{ latestPost.url }}" class="read-more">Keep reading →</a>
+      </div>
+    </div>
   </section>
 
-  {% assign tagList = collections | postTags %} {% if tagList.length > 0 %}
-  <section>
+  <div class="section-divider"></div>
+
+  <!-- Topics Section -->
+  <section class="topics-section">
     <h2>Topics</h2>
-    {%- for tag in tagList -%}
-    <a href="/tags/{{ tag.name }}">{{ tag.name }}({{ tag.count }})</a>{% if
-    forloop.last != true %}<span>, </span>{% endif %} {%- endfor -%}
+    <div class="topics-list">
+      {% assign tagList = collections | postTags %}
+      {%- for tag in tagList -%}
+        <a href="/tags/{{ tag.name }}" class="topic-link">{{ tag.name }}</a>{% if forloop.last != true %}, {% endif %}
+      {%- endfor -%}
+    </div>
   </section>
-  {% endif %}
 
-  <section>
-    <h2>More articles</h2>
-    {% assign posts = collections.posts %}
-    {% assign count = 5 %}
-    {% assign offset = 1 %}
-    {% include "postlist.liquid" %}
-    <a class="articles-link" href="/articles">All the articles</a>
+  <div class="section-divider"></div>
+
+  <!-- Writing Section -->
+  <section class="writing-section">
+    <h2><a href="/articles" class="section-heading-link">Writing</a></h2>
+    <div class="writing-list">
+      {% for post in collections.posts %}
+        <div class="post-item">
+          <div class="post-date">{{ post.date | date: "%Y · %m" }}</div>
+          <a href="{{ post.url }}" class="post-title">{{ post.data.title }}</a>
+        </div>
+      {% endfor %}
+    </div>
   </section>
 </div>
 
@@ -33,10 +67,111 @@ layout: layouts/default.liquid
   .main-sections {
     display: flex;
     flex-direction: column;
-    gap: var(--space-7);
+    gap: var(--space-3);
   }
-  .articles-link {
-    display: block;
-    margin-top: var(--space-4);
+  
+  /* Section Divider */
+  .section-divider {
+    height: 1px;
+    background-color: rgba(var(--color-text-rgb), 0.08);
+    margin: var(--space-2) 0;
+  }
+  
+  /* Latest Section Styles */
+  .latest-article {
+    margin-top: var(--space-2);
+  }
+  
+  .latest-section h2,
+  .topics-section h2,
+  .writing-section h2 {
+    margin-bottom: var(--space-2);
+  }
+  
+  .latest-article .article-title {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--space-2);
+  }
+  
+  .latest-article .article-title a {
+    color: var(--color-text);
+    text-decoration: none;
+  }
+  
+  .latest-article .article-title a:hover {
+    color: var(--color-primary);
+  }
+  
+  .latest-article .article-date {
+    color: var(--color-text-shade);
+    font-size: var(--font-size-xs);
+    margin-bottom: var(--space-3);
+  }
+  
+  .latest-article .article-excerpt {
+    margin-top: var(--space-2);
+    line-height: 1.5;
+  }
+  
+  .latest-article .article-excerpt p {
+    margin-bottom: var(--space-2);
+  }
+  
+  .read-more {
+    display: inline-block;
+    margin-top: var(--space-2);
+    text-decoration: none;
+  }
+  
+  /* Topics Section Styles */
+  .topics-list {
+    margin-top: var(--space-2);
+  }
+  
+  .topic-link {
+    text-decoration: none;
+    color: var(--color-text);
+  }
+  
+  .topic-link:hover {
+    color: var(--color-primary);
+    text-decoration: underline;
+  }
+  
+  /* Writing Section Styles */
+  .writing-list {
+    margin-top: var(--space-2);
+  }
+  
+  .post-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--space-1);
+  }
+  
+  .post-date {
+    min-width: 110px;
+    color: var(--color-text-shade);
+    font-size: var(--font-size-xs);
+  }
+  
+  .post-title {
+    color: var(--color-text);
+    text-decoration: none;
+  }
+  
+  .post-title:hover {
+    color: var(--color-primary);
+  }
+  
+  /* Section Heading Link */
+  .section-heading-link {
+    color: var(--color-text-shade);
+    text-decoration: none;
+    transition: color 0.2s ease-in-out;
+  }
+  
+  .section-heading-link:hover {
+    color: var(--color-primary);
   }
 </style>
